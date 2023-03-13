@@ -6,10 +6,10 @@ class Constants {
   static var blackColor = Colors.black54;
 
   //Onboarding texts
-  static var titleOne = "Learn more about plants";
-  static var descriptionOne = "Read how to care for plants in our rich plants guide.";
-  static var titleTwo = "Find a plant lover friend";
-  static var descriptionTwo = "Are you a plant lover? Connect with other plant lovers.";
+  static var titleOne = "Plantation made easy";
+  static var descriptionOne = "Follow step by step guide to plant a sapling";
+  static var titleTwo = "Find a suitable location to plant";
+  static var descriptionTwo = "Are you looking for a place to plant? Don't worry we got you.";
   static var titleThree = "Plant a tree, green the Earth";
   static var descriptionThree = "Find almost all types of plants that you like here.";
 }
