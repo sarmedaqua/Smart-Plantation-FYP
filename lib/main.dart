@@ -1,3 +1,4 @@
+import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
 import 'package:flutter/material.dart';
 
 import 'view/screens/onboarding_screen.dart';
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'System to Enhance Plantation Drive',
+      title: 'Smart Plantation',
 
-      home: OnboardingScreen(),
+      home: MapSample(),
 
 
       debugShowCheckedModeBanner: false,
