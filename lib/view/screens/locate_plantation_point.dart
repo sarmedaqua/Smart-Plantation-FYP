@@ -38,7 +38,8 @@ class MapSampleState extends State<MapSample> {
       body: Column(
 
         children: [
-          SizedBox(
+          Expanded(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width, // or use fixed size like 200
             height: MediaQuery.of(context).size.height * 0.8,
             child: GoogleMap(
@@ -52,8 +53,12 @@ class MapSampleState extends State<MapSample> {
               },
             ),
           ),
+          ),
           SizedBox(height: 30,),
+
           PlantedButton()
+
+
         ],
       ),
 

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Smart Plantation',
 
-      home: MapSample(),
+      home: OnboardingScreen(),
 
 
       debugShowCheckedModeBanner: false,

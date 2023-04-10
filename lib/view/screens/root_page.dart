@@ -1,5 +1,5 @@
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
@@ -30,6 +30,7 @@ class _RootPageState extends State<RootPage> {
       FavoritePage(favoritedPlants: favorites,),
       CartPage(addedToCartPlants: myCart,),
       const ProfilePage(),
+      const MapSample(),
     ];
   }
 
@@ -39,6 +40,7 @@ class _RootPageState extends State<RootPage> {
     Icons.favorite,
     Icons.shopping_cart,
     Icons.person,
+    Icons.location_on_outlined,
   ];
 
   //List of the pages titles
@@ -47,6 +49,7 @@ class _RootPageState extends State<RootPage> {
     'Favorite',
     'Cart',
     'Profile',
+    'Map',
   ];
 
   @override
@@ -78,14 +81,15 @@ class _RootPageState extends State<RootPage> {
         child: Image.asset('assets/images/code-scan-two.png', height: 30.0,),
         backgroundColor: Constants.primaryColor,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: AnimatedBottomNavigationBar(
           splashColor: Constants.primaryColor,
           activeColor: Constants.primaryColor,
           inactiveColor: Colors.black.withOpacity(.5),
           icons: iconList,
+
           activeIndex: _bottomNavIndex,
-          gapLocation: GapLocation.center,
+          gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.softEdge,
           onTap: (index){
             setState(() {
