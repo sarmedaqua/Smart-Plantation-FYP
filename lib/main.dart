@@ -1,11 +1,17 @@
-import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:tflite/tflite.dart';
 import 'view/screens/onboarding_screen.dart';
 
-void main() {
+List<CameraDescription>? cameras;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,3 +42,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
