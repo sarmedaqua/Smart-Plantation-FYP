@@ -178,22 +178,22 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            _plantList[widget.plantId].rating.toString(),
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              color: Constants.primaryColor,
-                            ),
-                          ),
-                          Icon(
-                            Icons.star,
-                            size: 30.0,
-                            color: Constants.primaryColor,
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       _plantList[widget.plantId].rating.toString(),
+                      //       style: TextStyle(
+                      //         fontSize: 30.0,
+                      //         color: Constants.primaryColor,
+                      //       ),
+                      //     ),
+                      //     Icon(
+                      //       Icons.star,
+                      //       size: 30.0,
+                      //       color: Constants.primaryColor,
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   const SizedBox(

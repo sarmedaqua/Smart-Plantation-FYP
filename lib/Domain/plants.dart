@@ -2,7 +2,7 @@ class Plant {
   final int plantId;
   final int price;
   final String size;
-  final double rating;
+  // final double rating;
   final int humidity;
   final String temperature;
   final String category;
@@ -18,7 +18,7 @@ class Plant {
         required this.category,
         required this.plantName,
         required this.size,
-        required this.rating,
+        // required this.rating,
         required this.humidity,
         required this.temperature,
         required this.imageURL,
@@ -34,7 +34,7 @@ class Plant {
         category: 'Indoor',
         plantName: 'Sanseviera',
         size: 'Small',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 34,
         temperature: '23 - 34',
         imageURL: 'assets/images/plant-one.png',
@@ -49,7 +49,7 @@ class Plant {
         category: 'Outdoor',
         plantName: 'Philodendron',
         size: 'Medium',
-        rating: 4.8,
+        // rating: 4.8,
         humidity: 56,
         temperature: '19 - 22',
         imageURL: 'assets/images/plant-two.png',
@@ -64,7 +64,7 @@ class Plant {
         category: 'Indoor',
         plantName: 'Beach Daisy',
         size: 'Large',
-        rating: 4.7,
+        // rating: 4.7,
         humidity: 34,
         temperature: '22 - 25',
         imageURL: 'assets/images/plant-three.png',
@@ -79,7 +79,7 @@ class Plant {
         category: 'Outdoor',
         plantName: 'Big Bluestem',
         size: 'Small',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 35,
         temperature: '23 - 28',
         imageURL: 'assets/images/plant-one.png',
@@ -91,10 +91,10 @@ class Plant {
     Plant(
         plantId: 4,
         price: 24,
-        category: 'Recommended',
+        category: 'Outdoor',
         plantName: 'Big Bluestem',
         size: 'Large',
-        rating: 4.1,
+        // rating: 4.1,
         humidity: 66,
         temperature: '12 - 16',
         imageURL: 'assets/images/plant-four.png',
@@ -109,7 +109,7 @@ class Plant {
         category: 'Outdoor',
         plantName: 'Meadow Sage',
         size: 'Medium',
-        rating: 4.4,
+        // rating: 4.4,
         humidity: 36,
         temperature: '15 - 18',
         imageURL: 'assets/images/plant-five.png',
@@ -124,7 +124,7 @@ class Plant {
         category: 'Garden',
         plantName: 'Plumbago',
         size: 'Small',
-        rating: 4.2,
+        // rating: 4.2,
         humidity: 46,
         temperature: '23 - 26',
         imageURL: 'assets/images/plant-six.png',
@@ -139,7 +139,7 @@ class Plant {
         category: 'Garden',
         plantName: 'Tritonia',
         size: 'Medium',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 34,
         temperature: '21 - 24',
         imageURL: 'assets/images/plant-seven.png',
@@ -154,7 +154,7 @@ class Plant {
         category: 'Recommended',
         plantName: 'Tritonia',
         size: 'Medium',
-        rating: 4.7,
+        // rating: 4.7,
         humidity: 46,
         temperature: '21 - 25',
         imageURL: 'assets/images/plant-eight.png',

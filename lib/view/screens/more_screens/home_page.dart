@@ -22,11 +22,8 @@ class _HomePageState extends State<HomePage> {
 
     //Plants category
     List<String> _plantTypes = [
-      'Recommended',
       'Indoor',
       'Outdoor',
-      'Garden',
-      'Supplement',
     ];
 
     //Toggle Favorite button

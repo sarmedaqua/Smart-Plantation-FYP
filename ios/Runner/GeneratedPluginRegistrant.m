@@ -12,6 +12,12 @@
 @import camera_avfoundation;
 #endif
 
+#if __has_include(<geolocator_apple/GeolocatorPlugin.h>)
+#import <geolocator_apple/GeolocatorPlugin.h>
+#else
+@import geolocator_apple;
+#endif
+
 #if __has_include(<google_maps_flutter_ios/FLTGoogleMapsPlugin.h>)
 #import <google_maps_flutter_ios/FLTGoogleMapsPlugin.h>
 #else
@@ -34,6 +40,7 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [CameraPlugin registerWithRegistrar:[registry registrarForPlugin:@"CameraPlugin"]];
+  [GeolocatorPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeolocatorPlugin"]];
   [FLTGoogleMapsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleMapsPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [TflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"TflitePlugin"]];

@@ -4,7 +4,6 @@ import 'package:assignment_starter/main.dart';
 import 'package:tflite/tflite.dart';
 
 
-
 class Scan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class _HomeState extends State<Home> {
       output = '';
       predictions!.forEach((prediction) {
 
-        if(prediction['confidence']>0.9) {
+        if(prediction['confidence']>0.95) {
           output +=
               prediction['label'].toString().substring(0, 1).toUpperCase() +
                   prediction['label'].toString().substring(1) +

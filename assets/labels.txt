@@ -1,3 +1,19 @@
-0 Elephant-ear
-1 Money-plant
+0 Azadirachta Indica-Neem-
+1 Azadiractha Indica
 2 Brahea
+3 Calotropis
+4 Elephant-Ear
+5 Ficus Religiosa-Raavi-
+6 Money-Plant
+7 Oleander
+8 Daisy
+9 Dandelion
+10 Rose
+11 Sunflower
+12 Tulip
+13 Potato-healthy
+14 Potato-unhealthy
+15 Tomato-healthy
+16 Tomato-unhealthy
+17 Apple-healthy
+18 Apple-unhealthy
