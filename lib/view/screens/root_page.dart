@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
 import 'package:assignment_starter/view/screens/scan_page.dart';
-import 'package:assignment_starter/view/screens/more_screens/cart_page.dart';
+//import 'package:assignment_starter/view/screens/more_screens/cart_page.dart';
 import 'package:assignment_starter/view/screens/more_screens/favorite_page.dart';
 import 'package:assignment_starter/view/screens/more_screens/home_page.dart';
 import 'package:assignment_starter/view/screens/more_screens/profile_page.dart';
@@ -19,7 +19,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   List<Plant> favorites = [];
-  List<Plant> myCart = [];
+  //List<Plant> myCart = [];
 
   int _bottomNavIndex = 0;
 
@@ -28,9 +28,9 @@ class _RootPageState extends State<RootPage> {
     return [
       const HomePage(),
       FavoritePage(favoritedPlants: favorites,),
-      CartPage(addedToCartPlants: myCart,),
-      const ProfilePage(),
+      //CartPage(addedToCartPlants: myCart,),
       const MapSample(),
+      const ProfilePage(),
     ];
   }
 
@@ -38,18 +38,19 @@ class _RootPageState extends State<RootPage> {
   List<IconData> iconList = [
     Icons.home,
     Icons.favorite,
-    Icons.shopping_cart,
-    Icons.person,
+    //Icons.shopping_cart,
     Icons.location_on_outlined,
+    Icons.person,
+
   ];
 
   //List of the pages titles
   List<String> titleList = [
     'Home',
     'Favorite',
-    'Cart',
-    'Profile',
+    //'Cart',
     'Map',
+    'Profile',
   ];
 
   @override
@@ -95,10 +96,10 @@ class _RootPageState extends State<RootPage> {
             setState(() {
               _bottomNavIndex = index;
               final List<Plant> favoritedPlants = Plant.getFavoritedPlants();
-              final List<Plant> addedToCartPlants = Plant.addedToCartPlants();
+              //final List<Plant> addedToCartPlants = Plant.addedToCartPlants();
 
               favorites = favoritedPlants;
-              myCart = addedToCartPlants.toSet().toList();
+              //myCart = addedToCartPlants.toSet().toList();
             });
           }
       ),

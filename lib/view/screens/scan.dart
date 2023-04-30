@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
       output = '';
       predictions!.forEach((prediction) {
 
-        if(prediction['confidence']>0.95) {
+        if(prediction['confidence']>0.97) {
           output +=
               prediction['label'].toString().substring(0, 1).toUpperCase() +
                   prediction['label'].toString().substring(1) +

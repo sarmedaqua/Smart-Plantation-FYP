@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
@@ -44,8 +43,8 @@ class PlantWidget extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 Container(
-                  width: 60.0,
-                  height: 60.0,
+                  width: 75.0,
+                  height: 75.0,
                   decoration: BoxDecoration(
                     color: Constants.primaryColor.withOpacity(.8),
                     shape: BoxShape.circle,
@@ -56,42 +55,29 @@ class PlantWidget extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: SizedBox(
-                    height: 80.0,
+                    height: 90.0,
                     child:
                     Image.asset(plantList[index].imageURL),
                   ),
                 ),
-                Positioned(
-                  bottom: 5,
-                  left: 80,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(plantList[index].category),
-                      Text(
-                        plantList[index].plantName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Constants.blackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+
               ],
             ),
+
             Container(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
-                r'$' + plantList[index].price.toString(),
+                plantList[index].plantName,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                  color: Constants.primaryColor,
+                  fontSize: 27,
+                  color: Constants.blackColor,
                 ),
               ),
+
+
             )
+
           ],
         ),
       ),
