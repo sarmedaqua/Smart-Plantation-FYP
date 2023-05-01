@@ -97,7 +97,9 @@ class _TfliteModelState extends State<TfliteModel> {
 
                         if (selectedPlant != null) {
                           // Navigate to the plant details screen
-                          Navigator.push(context, PageTransition(child: DetailPage(plantId: selectedPlant.plantId), type: PageTransitionType.bottomToTop));
+                          Navigator.push(context,
+                              PageTransition(child: DetailPage(plantId: selectedPlant.plantId),
+                                  type: PageTransitionType.bottomToTop));
                         }
                       },
                       child: Container(

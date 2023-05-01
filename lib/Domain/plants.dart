@@ -162,3 +162,8 @@ class Plant {
     return _selectedPlants.where((element) => element.isSelected == true).toList();
   }
 }
+
+// Text(
+// output,
+// style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+// ),
