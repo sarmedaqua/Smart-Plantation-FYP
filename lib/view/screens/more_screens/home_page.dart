@@ -5,7 +5,11 @@ import 'detail_page.dart';
 import 'package:assignment_starter/view/screens/more_screens/widgets/plant_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
+
 class HomePage extends StatefulWidget {
+
+
+   //List<Plant> itemList= Plant.plantList;
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -13,21 +17,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _searchText = '';
+  List<Plant> myObjects = Plant.plantList;
+  List<Plant> _suggestions = [];
+  final TextEditingController _searchController = TextEditingController();
+  FocusNode _searchFocusNode = FocusNode();
   @override
+  initState() {
+    super.initState();
+    _suggestions = myObjects;
+
+  }
+
+  void _filterObjects(String query) {
+    List<Plant> filteredList = [];
+    if (query.isNotEmpty) {
+      filteredList = myObjects
+          .where((obj) =>
+      obj.plantName.toLowerCase().contains(query.toLowerCase()) )
+          .toList();
+    } else {
+      filteredList = myObjects;
+    }
+    // Update the list of search suggestions with the filtered list
+    setState(() {
+      _suggestions = filteredList;
+    });
+  }
+
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    List<Plant> _plantList = Plant.plantList;
+
 
     return Scaffold(
         body: SingleChildScrollView(
+
           child: Column(
+
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               Container(
-                padding: const EdgeInsets.only(top:10),
+                //padding: const EdgeInsets.only(top:10),
+                padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -44,92 +77,69 @@ class _HomePageState extends State<HomePage> {
                             Icons.search,
                             color: Colors.black54.withOpacity(.6),
                           ),
-                          const Expanded(
+
+                           Expanded(
                               child: TextField(
-                                showCursor: false,
+                                controller: _searchController,
+                                onChanged: _filterObjects,
+                                //showCursor: false,
                                 decoration: InputDecoration(
                                   hintText: 'Search Plant',
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                 ),
-                                // onChanged: () {
-                                //   setState(() {
-                                //     _searchText = ;
-                                //   });
-                                // },
-                              )),
+
+                                onTap: () {
+                                  _searchController.selection = TextSelection.fromPosition(
+                                      TextPosition(offset: _searchController.text.length));
+                                  _searchFocusNode.requestFocus(); // Add this line
+                                },
+                                focusNode: _searchFocusNode,
+                              ),
+
+                          ),
 
                           Icon(
                             Icons.mic,
                             color: Colors.black54.withOpacity(.6),
                           ),
+
                         ],
                       ),
                       decoration: BoxDecoration(
                         color: Constants.primaryColor.withOpacity(.1),
                         borderRadius: BorderRadius.circular(20),
+
                       ),
                     )
                   ],
                 ),
               ),
 
-
-              //Indoor / Outdoor
-              /*
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                height: 45.0,
-                width: size.width,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _plantTypes.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = index;
-                            });
-                          },
-                          child: Text(
-                            _plantTypes[index],
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: selectedIndex == index
-                                  ? FontWeight.bold
-                                  : FontWeight.w300,
-                              color: selectedIndex == index
-                                  ? Constants.primaryColor
-                                  : Constants.blackColor,
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              */
-
-
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
                 height: size.height*.8,
-                child: ListView.builder(
-                    itemCount: _plantList.length,
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, PageTransition(child: DetailPage(plantId: _plantList[index].plantId), type: PageTransitionType.bottomToTop));
-                          },
-                          child: PlantWidget(index: index, plantList: _plantList));
-                    }),
+                child:
+                ListView.builder(
+                  itemCount: _suggestions.length,
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    final Plant myObject = _suggestions[index];
+                    return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, PageTransition(child: DetailPage(plantId: myObject.plantId), type: PageTransitionType.bottomToTop));
+                        },
+                        child: PlantWidget(index: index, plantList: _suggestions));
+                  },
+                ),
+
               ),
+
             ],
           ),
         ));
 
   }
 }
+

@@ -85,15 +85,6 @@ class _HomeState extends State<Home> {
                   '\n';
         }
       }
-      // predictions!.forEach((element) {
-      //   setState(() {
-      //     output = element['label'];
-      //   });
-      // }
-
-
-
-
 
       );
 
@@ -112,18 +103,11 @@ class _HomeState extends State<Home> {
     loadmodel();
   }
 
-  // @override
-  // void dispose() async {
-  //   super.dispose();
-  //
-  //   await Tflite.close();
-  //   cameraController!.dispose();
-  // }
-
 
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('Plant Detector'), backgroundColor: Colors.green, ),
       body: Column(children: [
