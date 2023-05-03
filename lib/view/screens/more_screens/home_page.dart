@@ -99,11 +99,6 @@ class _HomePageState extends State<HomePage> {
 
                           ),
 
-                          Icon(
-                            Icons.mic,
-                            color: Colors.black54.withOpacity(.6),
-                          ),
-
                         ],
                       ),
                       decoration: BoxDecoration(

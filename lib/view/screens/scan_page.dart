@@ -46,26 +46,7 @@ class _ScanPageState extends State<ScanPage> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      debugPrint('favorite');
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Constants.primaryColor.withOpacity(.15),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.share,
-                          color: Constants.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
+
                 ],
               )),
           Positioned(
@@ -83,16 +64,18 @@ class _ScanPageState extends State<ScanPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
 
                   children: [
-                     FloatingActionButton(
-                      onPressed: (){
-                        Navigator.push(context, PageTransition(child:  GreenBottomSheet(), type: PageTransitionType.bottomToTop));
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            PageTransition(child:  GreenBottomSheet(),
+                                type: PageTransitionType.bottomToTop));
                       },
                       child: Image.asset(
                         'assets/images/code-scan.png',
-                        height: 300,
+                        height: 100,
                       ),
-                      backgroundColor: Constants.primaryColor,
                     ),
+
 
                     const SizedBox(
                       height: 20,
