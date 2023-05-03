@@ -31,20 +31,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.5
+  provider: 6.0.4
   google_maps_flutter: ^2.2.5
   google_maps_webservice: ^0.0.19
-  gap: ^2.0.1
-  firebase_core: ^2.8.0
-  geolocator: ^9.0.2
-
-
+  image_picker: ^0.8.6
+  tflite: ^1.1.2
+  get:
+  get_it: ^7.2.0
+  camera: ^0.10.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.4.0
-  fluentui_icons: ^1.0.0
   animated_bottom_navigation_bar:
   flutter_icons:
   page_transition:
@@ -64,11 +63,10 @@ flutter_icons:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  image_picker:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-dependency_overrides:
-  firebase_core_platform_interface: 4.5.3
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -80,6 +78,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Container(
                 padding: const EdgeInsets.only(top: 20),
                 child: Row(
@@ -80,6 +81,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+
+
+
+
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 height: 50.0,
@@ -112,6 +117,8 @@ class _HomePageState extends State<HomePage> {
                       );
                     }),
               ),
+
+
               SizedBox(
                 height: size.height * .3,
                 child: ListView.builder(
