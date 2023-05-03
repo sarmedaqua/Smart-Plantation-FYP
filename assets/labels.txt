@@ -1,3 +1,8 @@
-0 Elephant-ear
-1 Money-plant
-2 Brahea
+Calotrophis
+Neem
+Oleander
+Raavi
+Potato healthy
+Potato unhealthy
+Bell pepper healthy
+Bell pepper unhealthy

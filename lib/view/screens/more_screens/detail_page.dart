@@ -168,6 +168,7 @@ class _DetailPageState extends State<DetailPage> {
                           const SizedBox(
                             height: 10,
                           ),
+                          /*
                           Text(
                             r'$' + _plantList[widget.plantId].price.toString(),
                             style: TextStyle(
@@ -176,8 +177,10 @@ class _DetailPageState extends State<DetailPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          */
                         ],
                       ),
+                      /*
                       Row(
                         children: [
                           Text(
@@ -194,6 +197,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ],
                       ),
+                      */
                     ],
                   ),
                   const SizedBox(
@@ -216,6 +220,7 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ],
       ),
+      /*
       floatingActionButton: SizedBox(
         width: size.width * .9,
         height: 50,
@@ -274,6 +279,7 @@ class _DetailPageState extends State<DetailPage> {
           ],
         ),
       ),
+      */
     );
   }
 }

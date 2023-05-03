@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:assignment_starter/Domain/plants.dart';
-import 'package:assignment_starter/components/buttons/planted_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

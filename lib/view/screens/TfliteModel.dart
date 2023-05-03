@@ -1,9 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:tflite/tflite.dart';
+
+import '../../Domain/plants.dart';
+import 'more_screens/detail_page.dart';
 
 class TfliteModel extends StatefulWidget {
   const TfliteModel({Key? key}) : super(key: key);
@@ -14,9 +17,11 @@ class TfliteModel extends StatefulWidget {
 
 class _TfliteModelState extends State<TfliteModel> {
 
+  List<Plant> plants = Plant.plantList;
   late File _image;
   late List _results;
   bool imageSelect=false;
+  dynamic _highestConfidenceResult;
   @override
   void initState()
   {
@@ -40,14 +45,22 @@ class _TfliteModelState extends State<TfliteModel> {
       imageMean: 127.5,
       imageStd: 127.5,
     );
-    setState(() {
-      _results=recognitions!;
-      _image=image;
-      imageSelect=true;
-    });
+
+      setState(() {
+        _results = recognitions!;
+        _image = image;
+        imageSelect = true;
+        _results.sort((a, b) => b['confidence'].compareTo(.8));
+        _highestConfidenceResult = _results[0];
+      });
+
+
+
   }
   @override
+
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Plant Detector"),
@@ -55,7 +68,77 @@ class _TfliteModelState extends State<TfliteModel> {
       ),
       body: ListView(
         children: [
-          (imageSelect)?Container(
+          (imageSelect)
+              ? Container(
+            margin: const EdgeInsets.all(10),
+            child: Image.file(_image),
+          )
+              : Container(
+            margin: const EdgeInsets.all(10),
+            child: const Opacity(
+              opacity: 0.8,
+              child: Center(
+                child: Text("No image selected"),
+              ),
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                if (imageSelect && _highestConfidenceResult != null)
+                  Card(
+                    child: InkWell(
+                      onTap: () {
+                        // Find the selected plant from the list
+                        Plant? selectedPlant = plants.firstWhere(
+                              (plant) => plant.plantName == _highestConfidenceResult['label'],
+                          //orElse: () => null,
+                        );
+
+                        if (selectedPlant != null) {
+                          // Navigate to the plant details screen
+                          Navigator.push(context,
+                              PageTransition(child: DetailPage(plantId: selectedPlant.plantId),
+                                  type: PageTransitionType.bottomToTop));
+                        }
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(
+                          "${_highestConfidenceResult['label']} - ${_highestConfidenceResult['confidence'].toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: pickImage,
+        tooltip: "Pick Image",
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.image),
+      ),
+    );
+  }
+
+  /*
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Plant Detector"),
+        backgroundColor: Colors.green,
+      ),
+      body: ListView(
+        children: [
+          (imageSelect )?Container(
             margin: const EdgeInsets.all(10),
             child: Image.file(_image),
           ):Container(
@@ -69,7 +152,7 @@ class _TfliteModelState extends State<TfliteModel> {
           ),
           SingleChildScrollView(
             child: Column(
-              children: (imageSelect)?_results.map((result) {
+              children: (imageSelect && _highestConfidenceResult != null)?_results.map((result) {
                 return Card(
                   child: Container(
                     margin: EdgeInsets.all(10),
@@ -96,6 +179,8 @@ class _TfliteModelState extends State<TfliteModel> {
 
     );
   }
+  */
+
   Future pickImage()
   async {
     final ImagePicker _picker = ImagePicker();

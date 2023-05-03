@@ -2,7 +2,7 @@ class Plant {
   final int plantId;
   final int price;
   final String size;
-  final double rating;
+  // final double rating;
   final int humidity;
   final String temperature;
   final String category;
@@ -18,7 +18,7 @@ class Plant {
         required this.category,
         required this.plantName,
         required this.size,
-        required this.rating,
+        // required this.rating,
         required this.humidity,
         required this.temperature,
         required this.imageURL,
@@ -32,9 +32,9 @@ class Plant {
         plantId: 0,
         price: 22,
         category: 'Indoor',
-        plantName: 'Sanseviera',
+        plantName: 'Calotrophis',
         size: 'Small',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 34,
         temperature: '23 - 34',
         imageURL: 'assets/images/plant-one.png',
@@ -47,9 +47,9 @@ class Plant {
         plantId: 1,
         price: 11,
         category: 'Outdoor',
-        plantName: 'Philodendron',
+        plantName: 'Neem',
         size: 'Medium',
-        rating: 4.8,
+        // rating: 4.8,
         humidity: 56,
         temperature: '19 - 22',
         imageURL: 'assets/images/plant-two.png',
@@ -62,9 +62,9 @@ class Plant {
         plantId: 2,
         price: 18,
         category: 'Indoor',
-        plantName: 'Beach Daisy',
+        plantName: 'Oleander',
         size: 'Large',
-        rating: 4.7,
+        // rating: 4.7,
         humidity: 34,
         temperature: '22 - 25',
         imageURL: 'assets/images/plant-three.png',
@@ -77,9 +77,9 @@ class Plant {
         plantId: 3,
         price: 30,
         category: 'Outdoor',
-        plantName: 'Big Bluestem',
+        plantName: 'Raavi',
         size: 'Small',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 35,
         temperature: '23 - 28',
         imageURL: 'assets/images/plant-one.png',
@@ -91,10 +91,10 @@ class Plant {
     Plant(
         plantId: 4,
         price: 24,
-        category: 'Recommended',
-        plantName: 'Big Bluestem',
+        category: 'Outdoor',
+        plantName: 'Potato healthy',
         size: 'Large',
-        rating: 4.1,
+        // rating: 4.1,
         humidity: 66,
         temperature: '12 - 16',
         imageURL: 'assets/images/plant-four.png',
@@ -107,9 +107,9 @@ class Plant {
         plantId: 5,
         price: 24,
         category: 'Outdoor',
-        plantName: 'Meadow Sage',
+        plantName: 'Potato unhealthy',
         size: 'Medium',
-        rating: 4.4,
+        // rating: 4.4,
         humidity: 36,
         temperature: '15 - 18',
         imageURL: 'assets/images/plant-five.png',
@@ -122,9 +122,9 @@ class Plant {
         plantId: 6,
         price: 19,
         category: 'Garden',
-        plantName: 'Plumbago',
+        plantName: 'Bell pepper healthy',
         size: 'Small',
-        rating: 4.2,
+        // rating: 4.2,
         humidity: 46,
         temperature: '23 - 26',
         imageURL: 'assets/images/plant-six.png',
@@ -137,27 +137,12 @@ class Plant {
         plantId: 7,
         price: 23,
         category: 'Garden',
-        plantName: 'Tritonia',
+        plantName: 'Bell pepper unhealthy',
         size: 'Medium',
-        rating: 4.5,
+        // rating: 4.5,
         humidity: 34,
         temperature: '21 - 24',
         imageURL: 'assets/images/plant-seven.png',
-        isFavorated: false,
-        decription:
-        'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
-            'even the harshest weather condition.',
-        isSelected: false),
-    Plant(
-        plantId: 8,
-        price: 46,
-        category: 'Recommended',
-        plantName: 'Tritonia',
-        size: 'Medium',
-        rating: 4.7,
-        humidity: 46,
-        temperature: '21 - 25',
-        imageURL: 'assets/images/plant-eight.png',
         isFavorated: false,
         decription:
         'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
@@ -177,3 +162,8 @@ class Plant {
     return _selectedPlants.where((element) => element.isSelected == true).toList();
   }
 }
+
+// Text(
+// output,
+// style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+// ),

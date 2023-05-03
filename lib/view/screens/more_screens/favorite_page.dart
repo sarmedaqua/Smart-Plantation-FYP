@@ -16,7 +16,8 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return FocusScope(
+      child: Scaffold(
       body: widget.favoritedPlants.isEmpty
           ? Center(
         child: Column(
@@ -53,6 +54,7 @@ class _FavoritePageState extends State<FavoritePage> {
                   index: index, plantList: widget.favoritedPlants);
             }),
       ),
+    ),
     );
   }
 }

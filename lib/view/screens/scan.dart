@@ -1,9 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/main.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:tflite/tflite.dart';
-
-
+import '../../Domain/plants.dart';
+import 'more_screens/detail_page.dart';
 
 class Scan extends StatelessWidget {
   @override
@@ -14,8 +15,6 @@ class Scan extends StatelessWidget {
     );
   }
 }
-
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,6 +28,8 @@ class _HomeState extends State<Home> {
   CameraController? cameraController;
   String output = '';
   bool camera_on = false;
+  List<Plant> pl = Plant.plantList;
+  Plant? currentPlant;
 
   loadmodel() async {
     await Tflite.loadModel(
@@ -43,21 +44,16 @@ class _HomeState extends State<Home> {
       }
       setState(() {
           cameraController!.startImageStream((imageStream) {
-
             if (!camera_on)
             {
               camera_on = !camera_on;
               cameraImage = imageStream;
               runModel();
             }
-
           });
         });
-
-
     });
   }
-
 
   runModel() async {
     if (cameraImage != null) {
@@ -76,33 +72,28 @@ class _HomeState extends State<Home> {
 
       output = '';
       predictions!.forEach((prediction) {
-
-        if(prediction['confidence']>0.9) {
+        if (prediction['confidence'] > 0.97) {
           output +=
               prediction['label'].toString().substring(0, 1).toUpperCase() +
                   prediction['label'].toString().substring(1) +
                   " " +
                   (prediction['confidence'] as double).toStringAsFixed(3) +
                   '\n';
+          // Get the plant matching the detected label
+          String label = prediction['label'];
+          setState(() {
+            currentPlant = pl.firstWhere(
+                    (plan) => plan.plantName.toLowerCase() == label.toLowerCase(),
+                //orElse: () => null
+            );
+          });
         }
-      }
-      // predictions!.forEach((element) {
-      //   setState(() {
-      //     output = element['label'];
-      //   });
-      // }
-
-
-
-
-
-      );
+      });
 
       setState(() {
         output = output;
       });
       camera_on = false;
-
     }
   }
 
@@ -112,40 +103,48 @@ class _HomeState extends State<Home> {
     loadCamera();
     loadmodel();
   }
-
-  // @override
-  // void dispose() async {
-  //   super.dispose();
-  //
-  //   await Tflite.close();
-  //   cameraController!.dispose();
-  // }
-
-
-
   @override
+
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('Plant Detector'), backgroundColor: Colors.green, ),
       body: Column(children: [
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.7,
-            width: MediaQuery.of(context).size.width,
-            child: !cameraController!.value.isInitialized
-                ? Container()
-                : AspectRatio(
-              aspectRatio: cameraController!.value.aspectRatio,
-              child: CameraPreview(cameraController!),
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "Tap when detection is accurate",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+          GestureDetector(
+          onTap: () {
+
+        // Navigate to new screen
+        Navigator.push(context,
+            PageTransition(child: DetailPage(plantId: currentPlant!.plantId),
+                type: PageTransitionType.bottomToTop));
+          },
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width,
+                child: !cameraController!.value.isInitialized
+                    ? Container()
+                    : AspectRatio(
+                  aspectRatio: cameraController!.value.aspectRatio,
+                  child: CameraPreview(cameraController!),
+                ),
+              ),
             ),
           ),
-        ),
         Text(
           output,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        )
-      ]),
+        ),
+      ],
+      ),
     );
   }
 }

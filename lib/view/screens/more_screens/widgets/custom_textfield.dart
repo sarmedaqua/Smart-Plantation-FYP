@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:assignment_starter/staticfiles//constants.dart';
+import 'package:assignment_starter/staticfiles/constants.dart';
+
 class CustomTextfield extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
