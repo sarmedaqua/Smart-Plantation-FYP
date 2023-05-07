@@ -1,17 +1,22 @@
+import 'package:assignment_starter/view/screens/root_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
 
 class DetailPage extends StatefulWidget {
   final int plantId;
-  const DetailPage({Key? key, required this.plantId}) : super(key: key);
+
+  const DetailPage({Key? key, required this.plantId,}) : super(key: key);
+
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  //Toggle Favorite button
+
   bool toggleIsFavorated(bool isFavorited) {
     return !isFavorited;
   }
@@ -68,6 +73,12 @@ class _DetailPageState extends State<DetailPage> {
                           setState(() {
                             bool isFavorited = toggleIsFavorated(
                                 _plantList[widget.plantId].isFavorated);
+                            FirebaseFirestore.instance.collection("favourite_plants")
+                                .add({
+                              "plant_id": widget.plantId
+                            });
+
+
                             _plantList[widget.plantId].isFavorated =
                                 isFavorited;
                           });
