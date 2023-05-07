@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "547066280339",
+    "project_id": "iba-fyp",
+    "storage_bucket": "iba-fyp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547066280339:android:8a1ceaba9ea2e5b8709066",
+        "android_client_info": {
+          "package_name": "com.smart.plant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547066280339-n2e1vhepqgb3hmugqeqejc8ib4uorn3l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart.plant",
+            "certificate_hash": "937c9f4e04fe7cb6304e1c8254e7964181b428f8"
+          }
+        },
+        {
+          "client_id": "547066280339-2th46pgqibbc6dspnil0vcfcbi9qh54u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7O9d8sZpGGgFE8ydwU5NqjDTnH1bS0aE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547066280339-2th46pgqibbc6dspnil0vcfcbi9qh54u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

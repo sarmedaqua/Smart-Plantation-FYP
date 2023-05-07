@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/main.dart';
 import 'package:page_transition/page_transition.dart';
@@ -6,30 +7,42 @@ import 'package:tflite/tflite.dart';
 import '../../Domain/plants.dart';
 import 'more_screens/detail_page.dart';
 
-class Scan extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      home: Home(),
-    );
-  }
-}
+// class Scan extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       theme: ThemeData.dark(),
+//       home: Home(),
+//     );
+//   }
+// }
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  late User _user;
   CameraImage? cameraImage;
   CameraController? cameraController;
   String output = '';
   bool camera_on = false;
   List<Plant> pl = Plant.plantList;
   Plant? currentPlant;
+
+  // @override
+  // void initState() {
+  //   _user = widget._user;
+  //
+  //   super.initState();
+  // }
 
   loadmodel() async {
     await Tflite.loadModel(
@@ -99,6 +112,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    _user = widget._user;
+
     super.initState();
     loadCamera();
     loadmodel();
@@ -122,7 +137,7 @@ class _HomeState extends State<Home> {
 
         // Navigate to new screen
         Navigator.push(context,
-            PageTransition(child: DetailPage(plantId: currentPlant!.plantId),
+            PageTransition(child: DetailPage(plantId: currentPlant!.plantId,),
                 type: PageTransitionType.bottomToTop));
           },
             child: Padding(
