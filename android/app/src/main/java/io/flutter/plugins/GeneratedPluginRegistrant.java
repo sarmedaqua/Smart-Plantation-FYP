@@ -63,9 +63,9 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin image_picker_android, io.flutter.plugins.imagepicker.ImagePickerPlugin", e);
     }
     try {
-      flutterEngine.getPlugins().add(new boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin());
+      flutterEngine.getPlugins().add(new com.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin());
     } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin modal_progress_hud_nsn, boi.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin", e);
+      Log.e(TAG, "Error registering plugin modal_progress_hud_nsn, com.walle.modal_progress_hud_nsn.ModalProgressHudNsnPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.csdcorp.speech_to_text.SpeechToTextPlugin());

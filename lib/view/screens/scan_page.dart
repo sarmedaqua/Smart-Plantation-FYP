@@ -137,7 +137,7 @@ class GreenBottomSheet extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  //Navigator.push(context, PageTransition(child:  Scan(), type: PageTransitionType.bottomToTop));
+                  Navigator.push(context, PageTransition(child:  Scan(), type: PageTransitionType.bottomToTop));
                 },
                 icon: Icon(
                   Icons.camera_alt,
