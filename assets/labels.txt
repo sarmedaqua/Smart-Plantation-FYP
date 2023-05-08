@@ -4,5 +4,5 @@ Oleander
 Raavi
 Potato healthy
 Potato unhealthy
-Bell pepper healthy
-Bell pepper unhealthy
+Bellpepper healthy
+Bellpepper unhealthy

@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
           String label = prediction['label'];
           setState(() {
             currentPlant = pl.firstWhere(
-                    (plan) => plan.plantName.toLowerCase() == label.toLowerCase(),
+                    (plan) => plan.plantName.toLowerCase() == label.split(" ")[0].toString().toLowerCase(),
                 //orElse: () => null
             );
           });

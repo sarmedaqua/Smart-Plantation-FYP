@@ -95,7 +95,7 @@ class _TfliteModelState extends State<TfliteModel> {
                       onTap: () {
                         // Find the selected plant from the list
                         Plant? selectedPlant = plants.firstWhere(
-                              (plant) => plant.plantName == _highestConfidenceResult['label'],
+                              (plant) => plant.plantName == _highestConfidenceResult['label'].split(" ")[0],
                           //orElse: () => null,
                         );
 
