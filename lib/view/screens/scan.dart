@@ -31,20 +31,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late User _user;
+  //late User _user;
   CameraImage? cameraImage;
   CameraController? cameraController;
   String output = '';
   bool camera_on = false;
   List<Plant> pl = Plant.plantList;
   Plant? currentPlant;
-
-  // @override
-  // void initState() {
-  //   _user = widget._user;
-  //
-  //   super.initState();
-  // }
 
   loadmodel() async {
     await Tflite.loadModel(

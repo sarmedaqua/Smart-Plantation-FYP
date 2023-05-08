@@ -69,44 +69,77 @@ class ProfilePage extends StatelessWidget {
                   height: size.height * .7,
                   width: size.width,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
 
+                    // children: const [
+                    //   ProfileWidget(
+                    //     icon: Icons.person,
+                    //     title: 'My Profile',
+                    //     opt_name: 'MyProfile',
+                    //   ),
+                    //   ProfileWidget(
+                    //     icon: Icons.settings,
+                    //     title: 'Settings',
+                    //     opt_name: 'Settings',
+                    //   ),
+                    //   ProfileWidget(
+                    //     icon: Icons.notifications,
+                    //     title: 'Notifications',
+                    //     opt_name: 'Notifications',
+                    //   ),
+                    //   ProfileWidget(
+                    //     icon: Icons.chat,
+                    //     title: 'FAQs',
+                    //     opt_name: 'FAQs',
+                    //   ),
+                    //   ProfileWidget(
+                    //     icon: Icons.share,
+                    //     title: 'Share',
+                    //     opt_name: 'Share',
+                    //
+                    //   ),
+                    //
+                    //   ProfileWidget(
+                    //     icon: Icons.logout,
+                    //     title: '        Log Out',
+                    //     opt_name: 'LOGOUT',
+                    //   ),
+                    // ],
+
+
+
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: const [
-                      // ProfileWidget(
-                      //   icon: Icons.person,
-                      //   title: 'My Profile',
-                      //   opt_name: 'MyProfile',
-                      // ),
+                      ProfileWidget(
+                        icon: Icons.person,
+                        title: '           Log Out',
+                        opt_name: 'LOGOUT',
+                      ),
                       // ProfileWidget(
                       //   icon: Icons.settings,
                       //   title: 'Settings',
-                      //   opt_name: 'Settings',
+                      //   opt_name: 'LOGOUT',
                       // ),
                       // ProfileWidget(
                       //   icon: Icons.notifications,
                       //   title: 'Notifications',
-                      //   opt_name: 'Notifications',
+                      //   opt_name: 'LOGOUT',
                       // ),
                       // ProfileWidget(
                       //   icon: Icons.chat,
                       //   title: 'FAQs',
-                      //   opt_name: 'FAQs',
+                      //   opt_name: 'LOGOUT',
                       // ),
                       // ProfileWidget(
                       //   icon: Icons.share,
                       //   title: 'Share',
-                      //   opt_name: 'Share',
-                      //
+                      //   opt_name: 'LOGOUT',
                       // ),
-
-                      ProfileWidget(
-                        icon: Icons.logout,
-                        title: '        Log Out',
-                        opt_name: 'LOGOUT',
-                      ),
-
-
-
+                      // ProfileWidget(
+                      //   icon: Icons.logout,
+                      //   title: 'Log Out',
+                      //   opt_name: 'LOGOUT',
+                      // ),
                     ],
 
                   ),
