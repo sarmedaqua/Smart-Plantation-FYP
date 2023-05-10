@@ -1,7 +1,9 @@
+import 'package:assignment_starter/view/screens/root_page.dart';
 import 'package:flutter/material.dart';
 import '../../../staticfiles/constants.dart';
 
 import 'package:assignment_starter/view/screens/more_screens/signin_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -13,6 +15,15 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   var checkIfLoggedIn = FirebaseAuth.instance.currentUser!;
+  //   if(checkIfLoggedIn != null) {
+  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage(user: FirebaseAuth.instance.currentUser!)));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

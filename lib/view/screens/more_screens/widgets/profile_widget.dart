@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles//constants.dart';
 import '../../../../utils/authentication.dart';
+import '../../../../widgets/custom_colors.dart';
 import '../signin_page.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -38,7 +39,17 @@ class ProfileWidget extends StatelessWidget {
   String gesture_action (String opt_name, BuildContext context) {
     if(opt_name == 'LOGOUT'){
       Authentication.signOut(context: context);
+      CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(
+            CustomColors.firebaseOrange,
+      ),
+            );
+      const snackBar = SnackBar(
+        content: Text('Logged OUT!'),
+      );
+
       Navigator.of(context).pushReplacement(_routeToSignInScreen());
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     return opt_name;
   }
