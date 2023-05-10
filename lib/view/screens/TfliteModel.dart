@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,13 +10,16 @@ import '../../Domain/plants.dart';
 import 'more_screens/detail_page.dart';
 
 class TfliteModel extends StatefulWidget {
-  const TfliteModel({Key? key}) : super(key: key);
+  const TfliteModel({Key? key})
+      : super(key: key);
+
 
   @override
   _TfliteModelState createState() => _TfliteModelState();
 }
 
 class _TfliteModelState extends State<TfliteModel> {
+  late User _user;
 
   List<Plant> plants = Plant.plantList;
   late File _image;
@@ -91,7 +95,7 @@ class _TfliteModelState extends State<TfliteModel> {
                       onTap: () {
                         // Find the selected plant from the list
                         Plant? selectedPlant = plants.firstWhere(
-                              (plant) => plant.plantName == _highestConfidenceResult['label'],
+                              (plant) => plant.plantName == _highestConfidenceResult['label'].split(" ")[0],
                           //orElse: () => null,
                         );
 

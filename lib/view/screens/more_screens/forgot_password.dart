@@ -1,11 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/view/screens/more_screens/widgets/custom_textfield.dart';
 import 'signin_page.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../../widgets/reusable_widget.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
+
+  @override
+  _ForgotPasswordState createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword>{
+
+  TextEditingController _emailTextController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,32 +41,43 @@ class ForgotPassword extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const CustomTextfield(
-                obscureText: false,
-                hintText: 'Enter Email',
-                icon: Icons.alternate_email,
+              reusableTextField("Enter Email Id", Icons.person_outline, false,
+                  _emailTextController),
+              const SizedBox(
+                height: 30,
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    color: Constants.primaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: const Center(
-                    child: Text(
-                      'Reset Password',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              firebaseUIButton(context, "Reset Password", () {
+                FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: _emailTextController.text)
+                    .then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn())));
+              }),
+
+              // const CustomTextfield(
+              //   obscureText: false,
+              //   hintText: 'Enter Email',
+              //   icon: Icons.alternate_email,
+              // ),
+              // GestureDetector(
+              //   onTap: () {},
+              //   child: Container(
+              //     width: size.width,
+              //     decoration: BoxDecoration(
+              //       color: Constants.primaryColor,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     padding:
+              //     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              //     child: const Center(
+              //       child: Text(
+              //         'Reset Password',
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 20,
               ),

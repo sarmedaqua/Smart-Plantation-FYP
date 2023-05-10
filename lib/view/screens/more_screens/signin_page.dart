@@ -5,9 +5,24 @@ import 'forgot_password.dart';
 import 'signup_page.dart';
 import 'package:assignment_starter/view/screens/more_screens/widgets/custom_textfield.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../../widgets/google_sign_in_button.dart';
+import '../../../utils/authentication.dart';
+import '../../../widgets/reusable_widget.dart';
+import '../../../widgets/custom_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
+
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+
+  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _emailTextController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,27 +47,50 @@ class SignIn extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const CustomTextfield(
-                obscureText: false,
-                hintText: 'Enter Email',
-                icon: Icons.alternate_email,
+              reusableTextField("Enter UserName", Icons.person_outline, false,
+                  _emailTextController),
+
+              const SizedBox(
+                height: 30,
               ),
-              const CustomTextfield(
-                obscureText: true,
-                hintText: 'Enter Password',
-                icon: Icons.lock,
-              ),
+
+              reusableTextField("Enter Password", Icons.lock_outline, true,
+                  _passwordTextController),
+
+              firebaseUIButton(context, "Sign In", () {
+                FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
+                    email: _emailTextController.text,
+                    password: _passwordTextController.text)
+                    .then((value) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RootPage(user: value.user!)));
+                }).onError((error, stackTrace) {
+                  print("Error ${error.toString()}");
+                });
+              }),
+
+              // const CustomTextfield(
+              //   obscureText: false,
+              //   hintText: 'Enter Email',
+              //   icon: Icons.alternate_email,
+              // ),
+              // const CustomTextfield(
+              //   obscureText: true,
+              //   hintText: 'Enter Password',
+              //   icon: Icons.lock,
+              // ),
               const SizedBox(
                 height: 10,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageTransition(
-                          child: const RootPage(),
-                          type: PageTransitionType.bottomToTop));
-                },
+                // onTap: () {
+                //   Navigator.pushReplacement(
+                //       context,
+                //       PageTransition(
+                //           child: const RootPage(),
+                //           type: PageTransitionType.bottomToTop));
+                // },
                 child: Container(
                   width: size.width,
                   decoration: BoxDecoration(
@@ -65,7 +103,7 @@ class SignIn extends StatelessWidget {
                     child: Text(
                       'Sign In',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 18.0,
                       ),
                     ),
@@ -118,29 +156,45 @@ class SignIn extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                width: size.width,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Constants.primaryColor),
-                    borderRadius: BorderRadius.circular(10)),
-                padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      child: Image.asset('assets/images/google.png'),
+              // Container(
+              //   width: size.width,
+              //   decoration: BoxDecoration(
+              //       border: Border.all(color: Constants.primaryColor),
+              //       borderRadius: BorderRadius.circular(10)),
+              //   padding:
+              //   const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //     children: [
+              //       SizedBox(
+              //         height: 30,
+              //         child: Image.asset('assets/images/google.png'),
+              //       ),
+              //       Text(
+              //         'Sign In with Google',
+              //         style: TextStyle(
+              //           color: Constants.blackColor,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              //
+              // ),
+              FutureBuilder(
+                future: Authentication.initializeFirebase(context: context),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error initializing Firebase');
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return GoogleSignInButton();
+                  }
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      CustomColors.firebaseOrange,
                     ),
-                    Text(
-                      'Sign In with Google',
-                      style: TextStyle(
-                        color: Constants.blackColor,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -150,7 +204,7 @@ class SignIn extends StatelessWidget {
                   Navigator.pushReplacement(
                       context,
                       PageTransition(
-                          child: const SignUp(),
+                          child: SignUp(),
                           type: PageTransitionType.bottomToTop));
                 },
                 child: Center(
@@ -173,7 +227,9 @@ class SignIn extends StatelessWidget {
                 ),
               ),
             ],
+
           ),
+
         ),
       ),
     );

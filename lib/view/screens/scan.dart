@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/main.dart';
 import 'package:page_transition/page_transition.dart';
@@ -17,13 +18,20 @@ class Scan extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key,
+    //required User user
+  })
+      //: _user = user,
+      :  super(key: key);
+
+  //final User _user;
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  //late User _user;
   CameraImage? cameraImage;
   CameraController? cameraController;
   String output = '';
@@ -83,7 +91,7 @@ class _HomeState extends State<Home> {
           String label = prediction['label'];
           setState(() {
             currentPlant = pl.firstWhere(
-                    (plan) => plan.plantName.toLowerCase() == label.toLowerCase(),
+                    (plan) => plan.plantName.toLowerCase() == label.split(" ")[0].toString().toLowerCase(),
                 //orElse: () => null
             );
           });
@@ -99,6 +107,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    //_user = widget._user;
+
     super.initState();
     loadCamera();
     loadmodel();
@@ -122,7 +132,7 @@ class _HomeState extends State<Home> {
 
         // Navigate to new screen
         Navigator.push(context,
-            PageTransition(child: DetailPage(plantId: currentPlant!.plantId),
+            PageTransition(child: DetailPage(plantId: currentPlant!.plantId,),
                 type: PageTransitionType.bottomToTop));
           },
             child: Padding(

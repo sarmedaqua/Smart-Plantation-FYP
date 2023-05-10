@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
@@ -10,19 +11,28 @@ class HomePage extends StatefulWidget {
 
 
    //List<Plant> itemList= Plant.plantList;
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+  late User _user;
+
   List<Plant> myObjects = Plant.plantList;
   List<Plant> _suggestions = [];
   final TextEditingController _searchController = TextEditingController();
   FocusNode _searchFocusNode = FocusNode();
   @override
-  initState() {
+  void initState() {
+    _user = widget._user;
+
     super.initState();
     _suggestions = myObjects;
 
@@ -97,11 +107,6 @@ class _HomePageState extends State<HomePage> {
                                 focusNode: _searchFocusNode,
                               ),
 
-                          ),
-
-                          Icon(
-                            Icons.mic,
-                            color: Colors.black54.withOpacity(.6),
                           ),
 
                         ],
