@@ -1,15 +1,9 @@
-
-import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
 import 'package:assignment_starter/view/screens/root_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:assignment_starter/staticfiles/constants.dart';
-
-
+import '../../../staticfiles/constants.dart';
 
 import 'package:assignment_starter/view/screens/more_screens/signin_page.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -44,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage(user: FirebaseAuth.instance.currentUser!,)));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignIn()));
               }, //to login screen. We will update later
               child: const Text(
                 'Skip',
@@ -108,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               curve: Curves.easeIn);
                         }
                       } else {
-                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignIn()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignIn()));
                       }
                     });
                   },
