@@ -1,7 +1,9 @@
 import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
 import 'package:assignment_starter/view/screens/root_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
+
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -28,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage(user: FirebaseAuth.instance.currentUser!,)));
               }, //to login screen. We will update later
               child: const Text(
                 'Skip',
