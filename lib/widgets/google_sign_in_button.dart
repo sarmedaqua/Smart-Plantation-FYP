@@ -42,6 +42,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           });
 
           if (user != null) {
+
+            const snackBar = SnackBar(
+              content: Text('Sign in Successful!'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => RootPage(

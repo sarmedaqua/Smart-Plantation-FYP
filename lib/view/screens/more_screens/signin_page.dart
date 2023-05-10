@@ -63,6 +63,15 @@ class _SignInState extends State<SignIn> {
                     email: _emailTextController.text,
                     password: _passwordTextController.text)
                     .then((value) {
+                  CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        CustomColors.firebaseOrange,
+                  ),
+                  );
+                  const snackBar = SnackBar(
+                    content: Text('Logged In!'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => RootPage(user: value.user!)));
                 }).onError((error, stackTrace) {
