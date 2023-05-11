@@ -109,7 +109,7 @@ class _TfliteModelState extends State<TfliteModel> {
                       child: Container(
                         margin: EdgeInsets.all(10),
                         child: Text(
-                          "${_highestConfidenceResult['label']} - ${_highestConfidenceResult['confidence'].toStringAsFixed(2)}",
+                          "${_highestConfidenceResult['label']} ${'\n'} ${"Detection Accuracy: "} ${(_highestConfidenceResult['confidence']*100).toStringAsFixed(2)}${"%"}",
                           style: const TextStyle(
                             color: Colors.red,
                             fontSize: 20,

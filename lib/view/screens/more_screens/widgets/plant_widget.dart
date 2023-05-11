@@ -46,7 +46,8 @@ class PlantWidget extends StatelessWidget {
                   width: 75.0,
                   height: 75.0,
                   decoration: BoxDecoration(
-                    color: Constants.primaryColor.withOpacity(.8),
+                    color: Colors.white,
+                    // Constants.primaryColor.withOpacity(.8),
                     shape: BoxShape.circle,
                   ),
                 ),
