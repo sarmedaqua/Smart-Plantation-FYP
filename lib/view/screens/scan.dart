@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
               prediction['label'].toString().substring(0, 1).toUpperCase() +
                   prediction['label'].toString().substring(1) +
                   '\n'+
-                  "Dectation accuracy: " +
+                  "Detection accuracy: " +
                   ((prediction['confidence'])*100 as double).toStringAsFixed(3) + "%"+
                   '\n';
           // Get the plant matching the detected label
