@@ -4,11 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DetailPage extends StatefulWidget {
   final int plantId;
 
-  const DetailPage({Key? key, required this.plantId,}) : super(key: key);
+  const DetailPage({Key? key, required this.plantId, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
 
   @override
@@ -16,6 +21,8 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+
+  late User _user;
 
   bool toggleIsFavorated(bool isFavorited) {
     return !isFavorited;
@@ -71,16 +78,48 @@ class _DetailPageState extends State<DetailPage> {
                     child: IconButton(
                         onPressed: () {
                           setState(() {
-                            bool isFavorited = toggleIsFavorated(
-                                _plantList[widget.plantId].isFavorated);
-                            FirebaseFirestore.instance.collection("favourite_plants")
-                                .add({
-                              "plant_id": widget.plantId
-                            });
+                             bool isFavorited = toggleIsFavorated(
+                                 _plantList[widget.plantId].isFavorated);
+
+                            if(_plantList[widget.plantId].isFavorated == false) {
+                              FirebaseFirestore.instance.collection(
+                                  'favourite_plant_data')
+                                  .add({
+                                'plant_id': widget.plantId,
+                                'user_mail': FirebaseAuth.instance.currentUser
+                                    ?.email
+                              }).then((value) => print("DATA ADDED"))
+                                  .catchError((error) => print(error));
+
+                              _plantList[widget.plantId].isFavorated =
+                                  isFavorited;
+
+                              Navigator.push(context, PageTransition(child: RootPage(user: FirebaseAuth.instance.currentUser!), type: PageTransitionType.bottomToTop));
+
+                              //toggleIsFavorated(_plantList[widget.plantId].isFavorated);
+                            }
+
+                            else {
+
+                              Future<void> removeFavourite() async {
+                                print('hello');
+                                QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('favourite_plant_data').where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).where('plant_id', isEqualTo: widget.plantId).get();
+
+                                querySnapshot.docs.forEach((favDoc) {
+                                  FirebaseFirestore.instance.collection('favourite_plant_data').doc(favDoc.id).delete();
+                                });
+                                _plantList[widget.plantId].isFavorated = false;
+
+                                Navigator.push(context, PageTransition(child: RootPage(user: FirebaseAuth.instance.currentUser!), type: PageTransitionType.bottomToTop));
+
+                              }
+                              removeFavourite();
+
+                            }
 
 
-                            _plantList[widget.plantId].isFavorated =
-                                isFavorited;
+                            // _plantList[widget.plantId].isFavorated =
+                            //     isFavorited;
                           });
                         },
                         icon: Icon(

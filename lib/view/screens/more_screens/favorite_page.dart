@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
@@ -13,12 +17,37 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+   final List<Plant> favourite_plants = [];
+
+
+  void Favourite() {
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('favourite_plant_data');
+    //favourite_plants.clear();
+
+    Future<void> getData() async {
+
+      QuerySnapshot querySnapshot = await _collectionRef.where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
+
+      favourite_plants.clear();
+      querySnapshot.docs.forEach((favouritedoc) {
+        favourite_plants.add(Plant.plantList[favouritedoc['plant_id']]);
+        print(favourite_plants);
+      });
+
+    }
+    getData();
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+     Favourite();
     Size size = MediaQuery.of(context).size;
     return FocusScope(
       child: Scaffold(
-      body: widget.favoritedPlants.isEmpty
+      body: favourite_plants.isEmpty
           ? Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,12 +75,12 @@ class _FavoritePageState extends State<FavoritePage> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 30),
         height: size.height * .5,
         child: ListView.builder(
-            itemCount: widget.favoritedPlants.length,
+            itemCount: favourite_plants.length,
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               return PlantWidget(
-                  index: index, plantList: widget.favoritedPlants);
+                  index: index, plantList: favourite_plants);
             }),
       ),
     ),

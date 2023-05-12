@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                     final Plant myObject = _suggestions[index];
                     return GestureDetector(
                         onTap: (){
-                          Navigator.push(context, PageTransition(child: DetailPage(plantId: myObject.plantId), type: PageTransitionType.bottomToTop));
+                          Navigator.push(context, PageTransition(child: DetailPage(plantId: myObject.plantId, user: FirebaseAuth.instance.currentUser!,), type: PageTransitionType.bottomToTop));
                         },
                         child: PlantWidget(index: index, plantList: _suggestions));
                   },

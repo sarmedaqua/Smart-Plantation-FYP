@@ -38,7 +38,7 @@ class Plant {
         humidity: 70,
         temperature: '20-35°C',
         imageURL: 'assets/images/plant-one.png',
-        isFavorated: true,
+        isFavorated: false,
         decription:
         'It is a large tropical plant that requires moderate to high humidity levels and warm to hot temperatures. It can grow up to 2-3 meters tall and is commonly used for medicinal purposes.',
         isSelected: false),
@@ -108,7 +108,7 @@ class Plant {
         humidity: 70,
         temperature: '15-20°C',
         imageURL: 'assets/images/plant-four.png',
-        isFavorated: true,
+        isFavorated: false,
         decription:
         'Potatoes are cool-season crops that require moderate humidity levels and grow best in cool temperatures. They prefer well-draining soil and regular watering, but overwatering should be avoided. Healthy potatoes are a staple food in many parts of the world and are known for their nutritional value.',
         isSelected: false),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles/constants.dart';
 import 'package:assignment_starter/Domain/plants.dart';
@@ -22,7 +23,7 @@ class PlantWidget extends StatelessWidget {
             context,
             PageTransition(
                 child: DetailPage(
-                  plantId: plantList[index].plantId,
+                  plantId: plantList[index].plantId, user: FirebaseAuth.instance.currentUser!,
                 ),
                 type: PageTransitionType.bottomToTop));
       },

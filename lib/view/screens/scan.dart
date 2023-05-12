@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
 
         // Navigate to new screen
         Navigator.push(context,
-            PageTransition(child: DetailPage(plantId: currentPlant!.plantId,),
+            PageTransition(child: DetailPage(plantId: currentPlant!.plantId, user: FirebaseAuth.instance.currentUser!,),
                 type: PageTransitionType.bottomToTop));
           },
             child: Padding(

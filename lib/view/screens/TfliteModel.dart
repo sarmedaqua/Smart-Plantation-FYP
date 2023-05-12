@@ -9,6 +9,7 @@ import 'package:tflite/tflite.dart';
 import '../../Domain/plants.dart';
 import 'more_screens/detail_page.dart';
 
+
 class TfliteModel extends StatefulWidget {
   const TfliteModel({Key? key})
       : super(key: key);
@@ -102,7 +103,7 @@ class _TfliteModelState extends State<TfliteModel> {
                         if (selectedPlant != null) {
                           // Navigate to the plant details screen
                           Navigator.push(context,
-                              PageTransition(child: DetailPage(plantId: selectedPlant.plantId),
+                              PageTransition(child: DetailPage(plantId: selectedPlant.plantId, user: FirebaseAuth.instance.currentUser!,),
                                   type: PageTransitionType.bottomToTop));
                         }
                       },
