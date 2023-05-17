@@ -1,9 +1,13 @@
+import 'package:assignment_starter/view/screens/locate_plantation_point.dart';
 import 'package:assignment_starter/view/screens/root_page.dart';
-import 'package:flutter/material.dart';
-import '../../../staticfiles/constants.dart';
-
-import 'package:assignment_starter/view/screens/more_screens/signin_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:assignment_starter/staticfiles/constants.dart';
+
+import 'more_screens/signin_page.dart';
+import 'more_screens/signup_page.dart';
+
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -15,15 +19,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController(initialPage: 0);
   int currentIndex = 0;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   var checkIfLoggedIn = FirebaseAuth.instance.currentUser!;
-  //   if(checkIfLoggedIn != null) {
-  //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RootPage(user: FirebaseAuth.instance.currentUser!)));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +33,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: const EdgeInsets.only(right: 20, top: 20),
             child: InkWell(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const SignIn()));
-              }, //to login screen. We will update later
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => SignIn()),
+                  );
+                }
+              , //to login screen. We will update later
               child: const Text(
                 'Skip',
                 style: TextStyle(

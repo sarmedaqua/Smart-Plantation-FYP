@@ -48,7 +48,7 @@ class ProfileWidget extends StatelessWidget {
         content: Text('Logged OUT!'),
       );
 
-      Navigator.of(context).pushReplacement(_routeToSignInScreen());
+      Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => SignIn()));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     return opt_name;
@@ -66,7 +66,7 @@ class ProfileWidget extends StatelessWidget {
               Icon(
                 icon,
                 color: Constants.blackColor.withOpacity(.5),
-                size: 24,
+                size: 12,
               ),
               const SizedBox(
                 width: 16,
@@ -90,7 +90,7 @@ class ProfileWidget extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios,
             color: Constants.blackColor.withOpacity(.4),
-            size: 16,
+            size: 12,
           )
         ],
       ),
