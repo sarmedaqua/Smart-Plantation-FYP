@@ -47,6 +47,7 @@ dependencies:
   google_sign_in: ^6.1.0
   modal_progress_hud_nsn:
   speech_to_text:
+  geocoding:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

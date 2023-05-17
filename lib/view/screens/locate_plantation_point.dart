@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:geocoding/geocoding.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -14,8 +16,104 @@ class MapSample extends StatefulWidget {
 
 
 class MapSampleState extends State<MapSample> {
+
+
+  bool _selected = false;
+
   late LatLng universityMiddleCoordinates = LatLng(24.941374, 67.114108); // Southwest corner of university area
   double universityRadiusCoordinates = 400; // Northeast corner of university area
+
+  //all plants
+  List<String> plantDropDown = ['Neem', 'Bell Pepper', 'Potato'];
+ //user planted these plants
+  List<String> userPlants = [];
+//Selected value from menu
+  String selectedValue = "Choose plant";
+
+  void _showBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200.0,
+          child: Column(
+            children: [
+              ListTile(
+                leading: FaIcon(FontAwesomeIcons.plantWilt),
+                title: Center(child: Text(selectedValue)),
+                onTap: () {
+                  // Handle music option selection
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+  void _showAlertBox() async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+      title: Text('Select Plant'),
+      content: DropdownButton<String>(
+        hint: Text('Please choose a plant'),
+        value: _selected ? selectedValue: null,
+        isExpanded: true,
+        items: plantDropDown.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: TextStyle(color: Colors.green),
+            ),
+          );
+        }).toList(),
+        onChanged: (newValue) {
+          setState(() {
+            selectedValue = newValue!;
+            _selected  = true;
+            Navigator.pop(context);
+              _showAlertBox();
+
+          });
+        },
+      ),
+      actions: [
+        TextButton(
+          child: Text('OK'),
+          onPressed: () {
+            userPlants.add(selectedValue!);
+
+            getUserCurrentLocation().then((value) async {
+              _markers.add(
+                Marker(
+                  onTap: () {
+
+                   _showBottomSheet();
+                  },
+                  markerId: MarkerId("2"),
+                  position: LatLng(value.latitude, value.longitude),
+                  /*infoWindow: InfoWindow(
+                    title: '$selectedValue is planted here',
+                  ),*/
+                  icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+                ),
+              );
+              setState(() {
+
+              });
+            });
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+    );
+  }
 
 
 
@@ -26,15 +124,6 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
   final List<Marker> _markers = <Marker>[
-    Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
-        infoWindow: InfoWindow(
-          title: 'Elephant Ears Planted Here!',
-        ),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-
-    ),
   ];
 
   Future<Position> getUserCurrentLocation() async {
@@ -47,54 +136,30 @@ class MapSampleState extends State<MapSample> {
   }
 
 
-  late LatLng point1;
-  late LatLng point2;
-  late LatLng point3;
-  late LatLng point4;
-  late LatLng point5;
-  late LatLng point6;
-  late LatLng point7;
-  late LatLng point8;
-
-  late List<LatLng> plantLocationCoordinates = [];
-  late List<LatLng> plantLocationCoordinates1 = [];
+ //return long and lat of current location:
 
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(24.939954, 67.115214),
-    zoom: 14.4746,
-  );
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(24.939954, 67.115214),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  late CameraPosition _kGooglePlex;
+
+  void _setInitialCameraPosition() async {
+    Position position = await getUserCurrentLocation();
+    double latitude = position.latitude;
+    double longitude = position.longitude;
+
+    setState(() {
+      _kGooglePlex = CameraPosition(
+        target: LatLng(latitude, longitude),
+        zoom: 14.4746,
+      );
+    });
+  }
 
 
-  // Set<Circle> circles = Set.from([Circle(
-  //   center: LatLng(24.939954, 67.115214),
-  //   radius: 60, circleId: CircleId("1"),
-  // )]);
   @override
   void initState() {
     super.initState();
-
-    point1 = LatLng(24.939826, 67.113248);
-    point2 = LatLng(24.939525, 67.112741);
-    point3 = LatLng(24.939272, 67.112872);
-    point4 = LatLng(24.939600, 67.113298);
-
-    point5 = LatLng(24.938288, 67.112529);
-    point6 = LatLng(24.938381, 67.112678);
-    point7 = LatLng(24.938313, 67.112708);
-    point8 = LatLng(24.938229, 67.112582);
-    // point5 = LatLng(24.939516, 67.113276);
-    // point6 = LatLng(24.940214, 67.113566);
-    // point7 = LatLng(24.940214, 67.113566);
-
-    plantLocationCoordinates = [  point1,  point2,  point3,  point4, ];
-    plantLocationCoordinates1 = [  point5,  point6,  point7,  point8, ];
+    _setInitialCameraPosition();
   }
 
   @override
@@ -111,33 +176,6 @@ class MapSampleState extends State<MapSample> {
             height: MediaQuery.of(context).size.height * 0.8,
             child: GoogleMap(
               mapType: MapType.normal,
-                // circles: {
-                //   Circle(
-                //     circleId: CircleId("university"),
-                //     center: universityMiddleCoordinates,
-                //     radius: universityRadiusCoordinates,
-                //     fillColor: Colors.red.withOpacity(0.5),
-                //     strokeWidth: 2,
-                //     strokeColor: Colors.green,
-                //   ),
-                // },
-              polygons: {
-                Polygon(
-                  polygonId: PolygonId("university"),
-                  points: plantLocationCoordinates,
-                  fillColor: Colors.red.withOpacity(0.5),
-                  strokeWidth: 1,
-                  strokeColor: Colors.red.withOpacity(0.5),
-                ),
-                Polygon(
-                  polygonId: PolygonId("university"),
-                  points: plantLocationCoordinates1,
-                  fillColor: Colors.red.withOpacity(0.5),
-                  strokeWidth: 1,
-                  strokeColor: Colors.red.withOpacity(0.5),
-                ),
-
-              },
               markers: Set<Marker>.of(_markers),
               myLocationButtonEnabled: true,
               myLocationEnabled: true,
@@ -157,42 +195,11 @@ class MapSampleState extends State<MapSample> {
             child: Container(child: ElevatedButton(
 
               onPressed: () async {
-                getUserCurrentLocation().then((value) async {
-                  print(value.latitude.toString() + " " + value.longitude.toString());
-
-                  // marker added for current users location
-                  _markers.add(
-                      Marker(
-                        markerId: MarkerId("2"),
-                        position: LatLng(value.latitude, value.longitude),
-                        infoWindow: InfoWindow(
-                          title: 'Elephant Ears Planted Here!',
-                        ),
-                          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen)
-                      )
-                  );
-
-                  // specified current users location
-                  CameraPosition cameraPosition = new CameraPosition(
-                    target: LatLng(value.latitude, value.longitude),
-                    zoom: 14,
-                  );
-                  // specified current users location
-                  cameraPosition = new CameraPosition(
-                    target: LatLng(value.latitude, value.longitude),
-                    zoom: 14,
-                  );
-
-                  final GoogleMapController controller = await _controller.future;
-                  controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-                  setState(() {
-                  });
-
-                });
+                _showAlertBox();
               }
               ,
               child: Text(
-                'PLANTED',
+                'Planted',
                 style: TextStyle(
                   fontSize: 20,
                 ),
