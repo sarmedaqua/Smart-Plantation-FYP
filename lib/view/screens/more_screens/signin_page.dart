@@ -220,7 +220,7 @@ class _SignInState extends State<SignIn> {
                   child: Text.rich(
                     TextSpan(children: [
                       TextSpan(
-                        text: 'New to Planty? ',
+                        text: 'New to Plant Smartly? ',
                         style: TextStyle(
                           color: Constants.blackColor,
                         ),

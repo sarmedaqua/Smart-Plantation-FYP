@@ -73,7 +73,7 @@ class _FavoritePageState extends State<FavoritePage> {
       )
           : Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 30),
-        height: size.height * .5,
+        height: size.height * .8,
         child: ListView.builder(
             itemCount: favourite_plants.length,
             scrollDirection: Axis.vertical,

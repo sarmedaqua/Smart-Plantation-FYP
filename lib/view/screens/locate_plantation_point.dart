@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -78,6 +80,16 @@ class MapSampleState extends State<MapSample> {
             _selected  = true;
             Navigator.pop(context);
               _showAlertBox();
+            // FirebaseFirestore.instance.collection(
+            //     'plant_location')
+            //     .add({
+            //   'latitude': ,
+            //   'longitude':,
+            //   'plant_name':,
+            //   'user_mail': FirebaseAuth.instance.currentUser
+            //       ?.email
+            //
+            // });
 
           });
         },
@@ -89,10 +101,19 @@ class MapSampleState extends State<MapSample> {
             userPlants.add(selectedValue!);
 
             getUserCurrentLocation().then((value) async {
+              FirebaseFirestore.instance.collection(
+                  'plant_location')
+                  .add({
+                'latitude': value.latitude,
+                'longitude': value.longitude,
+                'plant_name': selectedValue,
+                'user_mail': FirebaseAuth.instance.currentUser
+                    ?.email
+              });
+              print(value.longitude);
               _markers.add(
                 Marker(
                   onTap: () {
-
                    _showBottomSheet();
                   },
                   markerId: MarkerId("2"),
@@ -107,6 +128,8 @@ class MapSampleState extends State<MapSample> {
 
               });
             });
+
+
             Navigator.of(context).pop();
           },
         ),
@@ -123,8 +146,8 @@ class MapSampleState extends State<MapSample> {
     target: LatLng(24.939954, 67.115214),
     zoom: 14.4746,
   );
-  final List<Marker> _markers = <Marker>[
-  ];
+  final List<Marker> _markers = <Marker>[];
+
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission().then((value){
@@ -159,12 +182,44 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     super.initState();
+    getMarkers();
     _setInitialCameraPosition();
+  }
+
+  void getMarkers() {
+    var marker_id = 0;
+    Future<void> getData() async {
+      CollectionReference _collectionRef = FirebaseFirestore.instance
+          .collection('plant_location');
+      QuerySnapshot querySnapshot = await _collectionRef.get();
+      querySnapshot.docs.forEach((plant_location_doc) {
+
+        //print('hello');
+        //print(plant_location_doc['latitude']);
+
+
+        _markers.add(
+          Marker(
+            onTap: () {
+              _showBottomSheet();
+            },
+            markerId: MarkerId(plant_location_doc.id),
+            position: LatLng(plant_location_doc['latitude'], plant_location_doc['longitude']),
+            //position: LatLng(34.765, 69.567),
+
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueBlue),
+          ),
+        );
+      });
+    }
+    getData();
   }
 
   @override
 
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Column(
 
