@@ -188,7 +188,7 @@ class MapSampleState extends State<MapSample> {
             ),
           ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 15),
 
           Padding(
             padding: EdgeInsets.only(bottom: 10),
