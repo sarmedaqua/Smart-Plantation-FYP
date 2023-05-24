@@ -92,33 +92,33 @@ class _SignInState extends State<SignIn> {
               const SizedBox(
                 height: 10,
               ),
-              GestureDetector(
-                // onTap: () {
-                //   Navigator.pushReplacement(
-                //       context,
-                //       PageTransition(
-                //           child: const RootPage(),
-                //           type: PageTransitionType.bottomToTop));
-                // },
-                child: Container(
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    color: Constants.primaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  child: const Center(
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   // onTap: () {
+              //   //   Navigator.pushReplacement(
+              //   //       context,
+              //   //       PageTransition(
+              //   //           child: const RootPage(),
+              //   //           type: PageTransitionType.bottomToTop));
+              //   // },
+              //   child: Container(
+              //     width: size.width,
+              //     decoration: BoxDecoration(
+              //       color: Constants.primaryColor,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     padding:
+              //     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              //     child: const Center(
+              //       child: Text(
+              //         'Sign In',
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 10,
               ),

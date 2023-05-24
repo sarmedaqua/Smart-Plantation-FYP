@@ -16,6 +16,14 @@ class MapSample extends StatefulWidget {
   State<MapSample> createState() => MapSampleState();
 }
 
+class history {
+  final String plantname;
+  final String latitude;
+  final String longitude;
+
+  history({required this.plantname, required this.latitude, required this.longitude});
+}
+
 
 class MapSampleState extends State<MapSample> {
 
@@ -27,6 +35,28 @@ class MapSampleState extends State<MapSample> {
 
   //all plants
   List<String> plantDropDown = ['Neem', 'Bell Pepper', 'Potato'];
+
+
+  final List<history> historyList =[];
+
+  void addHistory() {
+
+    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('plant_location');
+
+    Future<void> getData() async {
+      QuerySnapshot querySnapshot = await _collectionRef.where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
+
+      querySnapshot.docs.forEach((history_doc) {
+        history hist = new history(plantname: history_doc['plant_name'], latitude: history_doc['latitude'].toString(), longitude: history_doc['longitude'].toString());
+        historyList.add(hist);
+      });
+    }
+    getData();
+    //history hist = new history(plantname: plantname, latitude: latitude, longitude: longitude)
+  }
+
+
+
  //user planted these plants
   List<String> userPlants = [];
 //Selected value from menu
@@ -114,13 +144,13 @@ class MapSampleState extends State<MapSample> {
               _markers.add(
                 Marker(
                   onTap: () {
-                   _showBottomSheet();
+                   //_showBottomSheet();
                   },
                   markerId: MarkerId("2"),
                   position: LatLng(value.latitude, value.longitude),
-                  /*infoWindow: InfoWindow(
+                  infoWindow: InfoWindow(
                     title: '$selectedValue is planted here',
-                  ),*/
+                  ),
                   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
                 ),
               );
@@ -131,12 +161,42 @@ class MapSampleState extends State<MapSample> {
 
 
             Navigator.of(context).pop();
+            _showAlertBoxAfterPlanting();
           },
         ),
       ],
     ),
     );
   }
+
+
+  //alert box after planting
+
+  void _showAlertBoxAfterPlanting() async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+                   title: Text('Success!'),
+            content: Text('You have successfully planted ${selectedValue} at this location!'),
+           actions: [
+             TextButton(
+               child: Text('Continue'),
+               onPressed: () {
+                 Navigator.of(context).pop();
+               }
+             ),
+           ],
+    ));
+  }
+
+  // alert box to show history
+  //firebase crud
+  /*
+    * Collection : plants_planted
+    * Save plants there
+   */
+
+
 
 
 
@@ -182,7 +242,8 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     super.initState();
-    getMarkers();
+    addHistory();
+    //getMarkers();
     _setInitialCameraPosition();
   }
 
@@ -201,7 +262,7 @@ class MapSampleState extends State<MapSample> {
         _markers.add(
           Marker(
             onTap: () {
-              _showBottomSheet();
+              //_showBottomSheet();
             },
             markerId: MarkerId(plant_location_doc.id),
             position: LatLng(plant_location_doc['latitude'], plant_location_doc['longitude']),
@@ -247,33 +308,59 @@ class MapSampleState extends State<MapSample> {
 
           Padding(
             padding: EdgeInsets.only(bottom: 20),
-            child: Container(child: ElevatedButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(child:GestureDetector(
+                  onTap: () {
+                    //addHistory();
+                    body: ListView.builder(
+                      itemCount: historyList.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title: Text(historyList[index].plantname)
+                        );
+                      },
+                    );
+                  },
+                  child: Icon(
+                      FontAwesomeIcons.history
+                  ),
 
-              onPressed: () async {
-                _showAlertBox();
-              }
-              ,
-              child: Text(
-                'Plant here',
-                style: TextStyle(
-                  fontSize: 20,
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                disabledBackgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
                 ),
-                backgroundColor: (
-                    Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black
-                        : Color(
-                        0x980E7911)
-                ),
-                fixedSize: Size(180, 50),
-              ),
-            )),
-          )
+
+                Container(child: ElevatedButton(
+
+                  onPressed: () async {
+                    _showAlertBox();
+                  }
+                  ,
+                  child: Text(
+                    'Plant here',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    disabledBackgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    backgroundColor: (
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.black
+                            : Color(
+                            0x980E7911)
+                    ),
+                    fixedSize: Size(180, 50),
+                  ),
+                )),
+                SizedBox(width: 30,)
+              ],
+            ),
+          ),
 
 
         ],

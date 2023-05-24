@@ -102,7 +102,6 @@ class _DetailPageState extends State<DetailPage> {
                             else {
 
                               Future<void> removeFavourite() async {
-                                print('hello');
                                 QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('favourite_plant_data').where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).where('plant_id', isEqualTo: widget.plantId).get();
 
                                 querySnapshot.docs.forEach((favDoc) {
