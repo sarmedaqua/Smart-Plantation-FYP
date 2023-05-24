@@ -243,10 +243,10 @@ class MapSampleState extends State<MapSample> {
             ),
           ),
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 18),
 
           Padding(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: EdgeInsets.only(bottom: 20),
             child: Container(child: ElevatedButton(
 
               onPressed: () async {
@@ -254,7 +254,7 @@ class MapSampleState extends State<MapSample> {
               }
               ,
               child: Text(
-                'Planted',
+                'Plant here',
                 style: TextStyle(
                   fontSize: 20,
                 ),
