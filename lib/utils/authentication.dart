@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '../../view/screens/more_screens/home_page.dart';
 import '../../view/screens/root_page.dart';
+import '../view/screens/more_screens/signin_page.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -106,19 +107,40 @@ class Authentication {
   }
 
   static Future<void> signOut({required BuildContext context}) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    //final GoogleSignIn googleSignIn = GoogleSignIn();
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
-    try {
-      if (!kIsWeb) {
-        await googleSignIn.signOut();
-      }
-      await FirebaseAuth.instance.signOut();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        Authentication.customSnackBar(
-          content: 'Error signing out. Try again.',
-        ),
-      );
-    }
+    // try {
+    //   if (!kIsWeb) {
+    //     await googleSignIn.signOut();
+    //   }
+    //   await FirebaseAuth.instance.signOut();
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     Authentication.customSnackBar(
+    //       content: 'Error signing out. Try again.',
+    //     ),
+    //   );
+    // }
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => SignIn()));
   }
+
+  // static Future<void> signOut({required BuildContext context}) async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //
+  //   try {
+  //     if (!kIsWeb) {
+  //       await googleSignIn.signOut();
+  //     }
+  //     await FirebaseAuth.instance.signOut();
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       Authentication.customSnackBar(
+  //         content: 'Error signing out. Try again.',
+  //       ),
+  //     );
+  //   }
+  // }
 }

@@ -52,7 +52,6 @@ class MapSampleState extends State<MapSample> {
       });
     }
     getData();
-    //history hist = new history(plantname: plantname, latitude: latitude, longitude: longitude)
   }
 
 
@@ -328,7 +327,7 @@ class MapSampleState extends State<MapSample> {
   void initState() {
     super.initState();
     addHistory();
-    //getMarkers();
+    getMarkers();
     _setInitialCameraPosition();
   }
 
@@ -340,23 +339,40 @@ class MapSampleState extends State<MapSample> {
       QuerySnapshot querySnapshot = await _collectionRef.get();
       querySnapshot.docs.forEach((plant_location_doc) {
 
-        //print('hello');
-        //print(plant_location_doc['latitude']);
+        if(plant_location_doc['user_mail'] == FirebaseAuth.instance.currentUser?.email) {
+          _markers.add(
+            Marker(
+              onTap: () {
+                //_showBottomSheet();
+              },
+              markerId: MarkerId(plant_location_doc.id),
+              position: LatLng(plant_location_doc['latitude'],
+                  plant_location_doc['longitude']),
+              //position: LatLng(34.765, 69.567),
 
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueGreen),
+            ),
+          );
+        }
 
-        _markers.add(
-          Marker(
-            onTap: () {
-              //_showBottomSheet();
-            },
-            markerId: MarkerId(plant_location_doc.id),
-            position: LatLng(plant_location_doc['latitude'], plant_location_doc['longitude']),
-            //position: LatLng(34.765, 69.567),
+        else {
+          _markers.add(
+            Marker(
+              onTap: () {
+                //_showBottomSheet();
+              },
+              markerId: MarkerId(plant_location_doc.id),
+              position: LatLng(plant_location_doc['latitude'],
+                  plant_location_doc['longitude']),
+              //position: LatLng(34.765, 69.567),
 
-            icon: BitmapDescriptor.defaultMarkerWithHue(
-                BitmapDescriptor.hueBlue),
-          ),
-        );
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueBlue),
+            ),
+          );
+        }
+
       });
     }
     getData();

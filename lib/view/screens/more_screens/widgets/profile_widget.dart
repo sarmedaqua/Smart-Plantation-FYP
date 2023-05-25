@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment_starter/staticfiles//constants.dart';
 import '../../../../utils/authentication.dart';
 import '../../../../widgets/custom_colors.dart';
 import '../signin_page.dart';
+import '../../onboarding_screen.dart';
 
 class ProfileWidget extends StatelessWidget {
   final IconData icon;
@@ -36,22 +38,18 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  String gesture_action (String opt_name, BuildContext context) {
+  void gesture_action (String opt_name, BuildContext context) {
     if(opt_name == 'LOGOUT'){
       Authentication.signOut(context: context);
-      CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(
-            CustomColors.firebaseOrange,
-      ),
-            );
+      print(FirebaseAuth.instance.currentUser?.providerData);
+
       const snackBar = SnackBar(
         content: Text('Logged OUT!'),
       );
 
-      Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => SignIn()));
+      Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => OnboardingScreen()));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    return opt_name;
   }
 
   @override
@@ -69,14 +67,14 @@ class ProfileWidget extends StatelessWidget {
                 size: 12,
               ),
               const SizedBox(
-                width: 16,
+                width: 12,
               ),
               GestureDetector(
-                  onTap: () async {
-                    await gesture_action(opt_name, context);
+                  onTap: () {
+                     gesture_action(opt_name, context);
                   }
 
-                  ),
+              ),
               Text(
                 title,
                 style: TextStyle(

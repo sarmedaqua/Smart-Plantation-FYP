@@ -59,7 +59,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _gestureAction(String opt_name, BuildContext context) {
-    if(opt_name == 'LOGOUT'){
       Authentication.signOut(context: context);
       CircularProgressIndicator(
         valueColor: AlwaysStoppedAnimation<Color>(
@@ -70,9 +69,8 @@ class _ProfilePageState extends State<ProfilePage> {
         content: Text('Logged OUT!'),
       );
 
-      Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => SignIn()));
+      //Navigator.of(context).pushReplacement(PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) => SignIn()));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
   }
 
 //get Logout button

@@ -8,6 +8,7 @@ import 'package:assignment_starter/Domain/plants.dart';
 import 'package:assignment_starter/view/screens/more_screens/widgets/plant_widget.dart';
 
 class FavoritePage extends StatefulWidget {
+
   final List<Plant> favoritedPlants;
   const FavoritePage({Key? key, required this.favoritedPlants})
       : super(key: key);
@@ -17,6 +18,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+
    final List<Plant> favourite_plants = [];
 
 
@@ -38,6 +40,11 @@ class _FavoritePageState extends State<FavoritePage> {
     getData();
 
   }
+
+   @override
+   void initState() {
+     super.initState();
+   }
 
 
 
