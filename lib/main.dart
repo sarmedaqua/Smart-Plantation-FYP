@@ -15,6 +15,7 @@ Future<void> main() async {
   bool loggedIn = FirebaseAuth.instance.currentUser != null;
   cameras = await availableCameras();
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     title: 'Smart Plantation',
     home: loggedIn ? RootPage(user: FirebaseAuth.instance.currentUser!): OnboardingScreen(),
   ));
