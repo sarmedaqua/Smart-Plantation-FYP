@@ -34,7 +34,7 @@ class MapSampleState extends State<MapSample> {
   double universityRadiusCoordinates = 400; // Northeast corner of university area
 
   //all plants
-  List<String> plantDropDown = ['Neem', 'Bell Pepper', 'Potato'];
+  List<String> plantDropDown = ['Calotrophis', 'Neem', 'Oleander', 'Raavi', 'Potato', 'Bellpepper'];
 
 
   final List<history> historyList =[];
@@ -213,36 +213,34 @@ class MapSampleState extends State<MapSample> {
         //if connection (With firestore) is established then.....
         if (snapshot.connectionState == ConnectionState.active) {
           if(snapshot.hasData && snapshot.data != null) {
-            return Expanded(
-              child: ListView.builder(
-                //length as much as doc we have
-                itemCount:snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  //from docs array we are now selecting a doc
-                  Map<String, dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-                  //get users document id
-                  String documentId = snapshot.data!.docs[index].id;
-                  return Card(
-                    elevation: 10,
-                    child: ListTile(
-                      minVerticalPadding: 30,
-                      leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset('assets/images/plant-six.png')
-                      ),
-                      title: Text(userMap["plant_name"]),
-                      subtitle: Text('Planted at: '+userMap["longitude"].toString()  +' '+ userMap["latitude"].toString()),
-                      trailing: IconButton(onPressed: () {
-                        //delete with specific document function comes
-                        deleteUser("plant_location",documentId);
-                      },
-                        icon: Icon(Icons.delete),
-
-                      ),
+            return ListView.builder(
+              //length as much as doc we have
+              itemCount:snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                //from docs array we are now selecting a doc
+                Map<String, dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                //get users document id
+                String documentId = snapshot.data!.docs[index].id;
+                return Card(
+                  elevation: 10,
+                  child: ListTile(
+                    minVerticalPadding: 30,
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset('assets/images/plant-six.png')
                     ),
-                  );
-                },),
-            );
+                    title: Text(userMap["plant_name"]),
+                    subtitle: Text('Planted at: '+userMap["longitude"].toString()  +' '+ userMap["latitude"].toString()),
+                    trailing: IconButton(onPressed: () {
+                      //delete with specific document function comes
+                      deleteUser("plant_location",documentId);
+                    },
+                      icon: Icon(Icons.delete),
+
+                    ),
+                  ),
+                );
+              },);
           }
           else {
             return Text("No Data");
