@@ -29,7 +29,7 @@ class MapSampleState extends State<MapSample> {
 
 
   bool _selected = false;
-
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late LatLng universityMiddleCoordinates = LatLng(24.941374, 67.114108); // Southwest corner of university area
   double universityRadiusCoordinates = 400; // Northeast corner of university area
 
@@ -189,13 +189,100 @@ class MapSampleState extends State<MapSample> {
     ));
   }
 
+
+  //deleting
+  Future<void> deleteUser(String collectionName,String id) async{
+    await _firestore.collection(collectionName).doc(id).delete();
+  }
+  
   // alert box to show history
   //firebase crud
   /*
     * Collection : plants_planted
     * Save plants there
    */
+//alert box after planting
+//streambuilder to get
+  Widget realTimeDisplayOfAdding(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      //subscribed to firestore collection called users
+      //so whenever doc is added/changed, we get 'notification'
+      stream: _firestore.collection("plant_location").snapshots(),
+      //snapshot is real time data we will get
+      builder: (context, snapshot) {
+        //if connection (With firestore) is established then.....
+        if (snapshot.connectionState == ConnectionState.active) {
+          if(snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.builder(
+                //length as much as doc we have
+                itemCount:snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  //from docs array we are now selecting a doc
+                  Map<String, dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                  //get users document id
+                  String documentId = snapshot.data!.docs[index].id;
+                  return Card(
+                    elevation: 10,
+                    child: ListTile(
+                      minVerticalPadding: 30,
+                      leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset('assets/images/plant-six.png')
+                      ),
+                      title: Text(userMap["plant_name"]),
+                      subtitle: Text('Planted at: '+userMap["longitude"].toString()  +' '+ userMap["latitude"].toString()),
+                      trailing: IconButton(onPressed: () {
+                        //delete with specific document function comes
+                        deleteUser("plant_location",documentId);
+                      },
+                        icon: Icon(Icons.delete),
 
+                      ),
+                    ),
+                  );
+                },),
+            );
+          }
+          else {
+            return Text("No Data");
+          }}
+        else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }},
+    );
+  }
+
+  void _showAlertBoxHistory() async {
+    await showDialog(
+        context: context,
+        builder: (context) => SizedBox(
+          width: double.infinity,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            child: AlertDialog(
+
+              title: Text('History'),
+              content: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: realTimeDisplayOfAdding(context),
+              ),
+              actions: [
+                TextButton(
+                    child: Text('Continue'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
 
 
 
@@ -313,16 +400,7 @@ class MapSampleState extends State<MapSample> {
               children: [
                 Container(child:GestureDetector(
                   onTap: () {
-                    //addHistory();
-                    body: ListView.builder(
-                      itemCount: historyList.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Text(historyList[index].plantname)
-                        );
-                      },
-                    );
+                    _showAlertBoxHistory();
                   },
                   child: Icon(
                       FontAwesomeIcons.history
