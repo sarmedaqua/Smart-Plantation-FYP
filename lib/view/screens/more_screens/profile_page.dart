@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:assignment_starter/view/screens/more_screens/signin_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,39 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
 
    File? profilePic;
+
+   Future<void> removeFavourite() async {
+     QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('user_image').where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
+
+     querySnapshot.docs.forEach((favDoc) {
+       FirebaseFirestore.instance.collection('user_image').doc(favDoc.id).delete();
+     });
+
+   }
+
+
+   @override
+   void initState() {
+     void getImage() {
+       CollectionReference _collectionRef = FirebaseFirestore.instance.collection('user_image');
+
+       Future<void> getData() async {
+         QuerySnapshot querySnapshot = await _collectionRef.where('user_mail', isEqualTo: FirebaseAuth.instance.currentUser?.email).get();
+
+         querySnapshot.docs.forEach((imagedoc) {
+           //  favourite_plants.add(Plant.plantList[favouritedoc['plant_id']]);
+           //  print(favourite_plants);
+           profilePic = File(imagedoc['user_image']);
+         });
+
+       }
+       getData();
+     }
+     getImage();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -138,12 +172,23 @@ Widget _getAllButtons(BuildContext context) {
             child: IconButton(
               icon: Icon(Icons.camera_alt),
               onPressed: () async {
+                removeFavourite();
                 // Handle button press
                 XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
 
                 if (selectedImage != null) {
+
                   File convertedFile = File(selectedImage.path);
+
+                  FirebaseFirestore.instance.collection(
+                      'user_image')
+                      .add({
+                    'user_mail': FirebaseAuth.instance.currentUser
+                        ?.email,
+                    'user_image': selectedImage.path
+                  });
+
                   setState(() {
                     profilePic = convertedFile;
                   });
